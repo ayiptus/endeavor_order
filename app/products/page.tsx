@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -8,27 +8,46 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Trash2 } from "lucide-react"
+import { Trash2, ArrowUp } from "lucide-react"
 import { products } from "@/data/products"
 
 export default function ProductsPage() {
   const router = useRouter()
   const [cart, setCart] = useState<
-    Array<{ id: string; quantity: number; backerPanel?: boolean; selectedVariant?: string }>
+    Array<{ id: string; quantity: number; backerPanel?: boolean; selectedVariant?: string; notes?: string }>
   >([])
+  const [showScrollTop, setShowScrollTop] = useState(false)
 
-  const handleAddToCart = (productId: string, quantity: number, backerPanel?: boolean, selectedVariant?: string) => {
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const handleAddToCart = (
+    productId: string,
+    quantity: number,
+    backerPanel?: boolean,
+    selectedVariant?: string,
+    notes?: string,
+  ) => {
     if (quantity <= 0) return
 
     const existingItem = cart.find((item) => item.id === productId)
     if (existingItem) {
       setCart(
         cart.map((item) =>
-          item.id === productId ? { ...item, quantity: item.quantity + quantity, selectedVariant } : item,
+          item.id === productId ? { ...item, quantity: item.quantity + quantity, selectedVariant, notes } : item,
         ),
       )
     } else {
-      setCart([...cart, { id: productId, quantity, backerPanel, selectedVariant }])
+      setCart([...cart, { id: productId, quantity, backerPanel, selectedVariant, notes }])
     }
   }
 
@@ -62,15 +81,15 @@ export default function ProductsPage() {
             <Image
               src="/images/endeavor-health-logo-main.png"
               alt="Endeavor Health Logo"
-              width={120}
-              height={40}
+              width={360}
+              height={67.7}
               priority
             />
           </div>
-          <Link href="/" className="text-blue-600 hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
+          <Link href="/" className="text-[#235FF8] hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900">Interior Signs</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900">New Orders</h1>
           <p className="text-slate-600 mt-2">Select products and configure options to add to your quote</p>
         </div>
       </section>
@@ -89,11 +108,11 @@ export default function ProductsPage() {
 
             <aside className="hidden lg:block w-96 shrink-0">
               <div className="sticky top-8">
-                <Card className="p-6 border-2 border-slate-200">
+                <Card className="p-6 border-2 border-slate-200 bg-white">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-bold text-slate-900">Item Summary</h2>
-                    <Badge variant="default" className="bg-slate-900 text-white px-3 py-1 rounded-full">
+                    <Badge variant="default" className="bg-slate-200 text-slate-900 px-3 py-1 rounded-full">
                       {cart.length} {cart.length === 1 ? "item" : "items"}
                     </Badge>
                   </div>
@@ -103,7 +122,7 @@ export default function ProductsPage() {
                     <Button
                       onClick={handleClearAll}
                       variant="outline"
-                      className="w-full mb-4 border-slate-300 hover:bg-slate-50 bg-transparent"
+                      className="w-full mb-4 border-slate-300 text-slate-700 hover:bg-slate-50 bg-transparent"
                     >
                       Clear All
                     </Button>
@@ -119,10 +138,8 @@ export default function ProductsPage() {
                         if (!product) return null
                         const variant = product.variants?.find((v: any) => v.code === item.selectedVariant)
                         const price = variant?.price || product.price
-                        const dimensions = variant?.dimensions || product.dimensions
-                        const sqft = variant?.sqft || product.sqft
                         return (
-                          <div key={item.id} className="border border-slate-200 rounded-lg p-4">
+                          <div key={item.id} className="border border-slate-200 rounded-lg p-4 bg-slate-50">
                             <div className="flex gap-3">
                               {/* Product Image */}
                               <div className="w-16 h-16 bg-slate-100 rounded flex items-center justify-center shrink-0">
@@ -139,7 +156,7 @@ export default function ProductsPage() {
                               <div className="flex-1 min-w-0">
                                 <h3 className="font-semibold text-sm text-slate-900 truncate">{product.name}</h3>
                                 <p className="text-xs text-slate-500 uppercase">{product.id}</p>
-                                <p className="text-sm text-slate-600 mt-1">${price} each</p>
+                                <p className="text-sm text-slate-700 mt-1">${price} each</p>
 
                                 {/* Quantity Controls */}
                                 <div className="flex items-center gap-3 mt-2">
@@ -154,7 +171,7 @@ export default function ProductsPage() {
                                   />
                                   <button
                                     onClick={() => handleRemoveItem(item.id)}
-                                    className="text-slate-400 hover:text-red-600 transition-colors"
+                                    className="text-slate-500 hover:text-red-500 transition-colors"
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </button>
@@ -208,7 +225,7 @@ export default function ProductsPage() {
                   <Button
                     onClick={handlePreviewRequest}
                     disabled={cart.length === 0}
-                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                    className="w-full mt-4 bg-[#0B1B42] hover:bg-[#0B1B42]/90 text-white font-semibold"
                   >
                     Preview Request
                   </Button>
@@ -218,6 +235,16 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
+
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 bg-[#0B1B42] text-white p-3 rounded-full shadow-lg hover:bg-[#0B1B42]/90 transition-all z-50"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </button>
+      )}
     </main>
   )
 }
@@ -226,6 +253,7 @@ function ProductCard({ product, onAddToCart }: { product: any; onAddToCart: any 
   const [quantity, setQuantity] = useState(1)
   const [backerPanel, setBackerPanel] = useState(false)
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null)
+  const [notes, setNotes] = useState("")
 
   const currentPrice = selectedVariant
     ? product.variants?.find((v: any) => v.code === selectedVariant)?.price || product.price
@@ -265,7 +293,7 @@ function ProductCard({ product, onAddToCart }: { product: any; onAddToCart: any 
             <select
               value={selectedVariant || ""}
               onChange={(e) => setSelectedVariant(e.target.value || null)}
-              className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#235FF8]"
             >
               <option value="">Select a variant...</option>
               {product.variants.map((variant: any) => (
@@ -321,6 +349,18 @@ function ProductCard({ product, onAddToCart }: { product: any; onAddToCart: any 
           </div>
         )}
 
+        {/* Notes textarea */}
+        <div className="mb-4">
+          <label className="text-sm font-semibold text-slate-700 block mb-2">New Sign Details & Specifications:</label>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Add any special instructions or comments..."
+            className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#235FF8] min-h-[80px] resize-y"
+            rows={3}
+          />
+        </div>
+
         {/* Quantity Input */}
         <div className="mb-4">
           <label className="text-sm font-semibold text-slate-700">
@@ -340,8 +380,8 @@ function ProductCard({ product, onAddToCart }: { product: any; onAddToCart: any 
 
         {/* Add to Cart Button */}
         <Button
-          onClick={() => onAddToCart(product.id, quantity, backerPanel, selectedVariant)}
-          className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold"
+          onClick={() => onAddToCart(product.id, quantity, backerPanel, selectedVariant, notes)}
+          className="w-full bg-[#235FF8] hover:bg-[#1d4fc7] text-white font-semibold"
         >
           Add to Cart
         </Button>

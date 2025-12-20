@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Link from "next/link"
+import { BookOpen } from "lucide-react"
 
 export default function Home() {
   return (
@@ -13,8 +14,8 @@ export default function Home() {
             <Image
               src="/images/endeavor-health-logo-main.png"
               alt="Endeavor Health Logo"
-              width={200}
-              height={60}
+              width={360}
+              height={67.7}
               priority
             />
           </div>
@@ -67,22 +68,35 @@ export default function Home() {
                     </ul>
                   </div>
 
-                  {/* Button */}
-                  <Link href="/products">
-                    <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2">
-                      Configure Interior Signs
-                    </Button>
-                  </Link>
+                  <div className="space-y-3">
+                    <Link
+                      href="/help/new-order"
+                      className="flex items-center justify-center gap-2 text-sm text-slate-600 hover:text-[#235FF8] transition-colors"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      <span>How to Place a New Order</span>
+                    </Link>
+                    <Link href="/products">
+                      <Button className="w-full bg-slate-300 hover:bg-[#235FF8] text-slate-900 hover:text-white font-semibold py-2 transition-colors">
+                        Start New Order
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </Card>
-
             {/* Reorder Card */}
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="flex flex-col h-full">
-                {/* Image Container */}
-                <div className="relative w-full h-64 bg-slate-200">
-                  <Image src="/images/reorder.jpg" alt="Reorder" fill className="object-cover" priority />
+                <div className="relative w-full h-64 bg-slate-100 flex items-center justify-center">
+                  <Image
+                    src="/images/reorder-menu.png"
+                    alt="Reorder"
+                    width={618}
+                    height={320}
+                    className="object-contain"
+                    priority
+                  />
                 </div>
 
                 {/* Content Container */}
@@ -113,10 +127,20 @@ export default function Home() {
                     </ul>
                   </div>
 
-                  {/* Button */}
-                  <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2" disabled>
-                    Coming Soon
-                  </Button>
+                  <div className="space-y-3">
+                    <Link
+                      href="/help/reorder"
+                      className="flex items-center justify-center gap-2 text-sm text-slate-600 hover:text-[#235FF8] transition-colors"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      <span>How to Place a Reorder</span>
+                    </Link>
+                    <a href="https://emxreview.wayfindit.com/" target="_blank" rel="noopener noreferrer">
+                      <Button className="w-full bg-slate-300 hover:bg-[#235FF8] text-slate-900 hover:text-white font-semibold py-2 transition-colors">
+                        Reorder Past Project
+                      </Button>
+                    </a>
+                  </div>
                 </div>
               </div>
             </Card>
