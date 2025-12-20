@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { useRouter } from "next/navigation"
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
@@ -22,6 +23,7 @@ export default function QuotePage() {
   const [companyName, setCompanyName] = useState("")
   const [propertyAddress, setPropertyAddress] = useState("")
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     // Load cart from sessionStorage
@@ -37,9 +39,30 @@ export default function QuotePage() {
       alert("Please accept the disclaimer before submitting")
       return
     }
-    // Handle form submission
-    console.log("Form submitted", { fullName, email, companyName, propertyAddress, cart })
-    alert("Quote request submitted successfully! We'll review it within 24-48 business hours.")
+
+    const requestNumber = `ORD-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, "0")}${String(new Date().getDate()).padStart(2, "0")}-${Math.floor(Math.random() * 10000)}`
+    const requestDate = new Date().toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    })
+
+    const submissionData = {
+      requestNumber,
+      fullName,
+      email,
+      companyName,
+      propertyAddress,
+      cart,
+      totalAmount: subtotal,
+      requestDate,
+    }
+
+    // Save to sessionStorage for confirmation page
+    sessionStorage.setItem("submissionData", JSON.stringify(submissionData))
+
+    // Redirect to confirmation page
+    router.push("/quote/confirmation")
   }
 
   const subtotal = cart.reduce((sum, item) => {

@@ -56,7 +56,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/login-screen.jpg"
+                src="/images/02-eh-20helpasset-2013.png"
                 alt="Emodulex login screen"
                 width={800}
                 height={500}
@@ -76,7 +76,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/login-flow.jpg"
+                src="/images/03-eh-20helpasset-2012.png"
                 alt="Email entry and verification code screens"
                 width={1400}
                 height={500}
@@ -92,7 +92,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/project-dashboard.jpg"
+                src="/images/04-eh-20helpasset-2011.png"
                 alt="Project dashboard with search functionality"
                 width={1200}
                 height={550}
@@ -109,7 +109,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/project-detail.jpg"
+                src="/images/05-eh-20helpasset-2010.png"
                 alt="Project visualization with floor and pending items"
                 width={1200}
                 height={550}
@@ -125,7 +125,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/filters-menu.jpg"
+                src="/images/06-eh-20helpasset-209.png"
                 alt="Filters dropdown menu"
                 width={1200}
                 height={550}
@@ -141,7 +141,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/filter-by-action.jpg"
+                src="/images/07-eh-20helpasset-208.png"
                 alt="Filter by action menu options"
                 width={1200}
                 height={550}
@@ -158,7 +158,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/filter-selected.jpg"
+                src="/images/08-eh-20helpasset-207.png"
                 alt="Filter with New, Replace, and To Install selected"
                 width={1200}
                 height={550}
@@ -174,7 +174,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/floor-plan-view.jpg"
+                src="/images/09-eh-20helpasset-206.png"
                 alt="Floor plan view showing sign locations"
                 width={1600}
                 height={450}
@@ -191,7 +191,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/eye-icon-view.jpg"
+                src="/images/10-eh-20helpasset-2016.png"
                 alt="Click eye icon to view sign details"
                 width={1200}
                 height={500}
@@ -209,7 +209,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/sign-details-window.jpg"
+                src="/images/11-eh-20helpasset-2015.png"
                 alt="Sign details window with approve/reject options"
                 width={1200}
                 height={500}
@@ -226,7 +226,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/photo-zoom.jpg"
+                src="/images/12-eh-20helpasset-203.png"
                 alt="Photo zoom feature showing sign image"
                 width={1200}
                 height={500}
@@ -243,7 +243,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/discussion-tab.jpg"
+                src="/images/13-eh-20helpasset-202.png"
                 alt="Discussion tab for team collaboration"
                 width={1200}
                 height={500}
@@ -260,7 +260,7 @@ export default function ReorderHelpPage() {
             </p>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <Image
-                src="/help/reorder/specifications-review.jpg"
+                src="/images/14-eh-20helpasset-2014.png"
                 alt="Full view with sign specifications and survey images"
                 width={1600}
                 height={450}
