@@ -19,7 +19,7 @@ export default function Home() {
               priority
             />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Interior Signage Quote Request</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Signage Quotation Request</h1>
           <p className="text-lg text-slate-600">Select a category to begin your quote request</p>
         </div>
       </section>
@@ -43,27 +43,15 @@ export default function Home() {
                     <ul className="space-y-2 text-sm text-slate-700 mb-6">
                       <li className="flex gap-3">
                         <span className="text-slate-400">•</span>
-                        <span>Office signs, room numbers, wall graphics, branding</span>
+                        <span>Browse and select your interior signage products.</span>
                       </li>
                       <li className="flex gap-3">
                         <span className="text-slate-400">•</span>
-                        <span>Digital Reality Logo</span>
+                        <span>Configure all specifications and custom details.</span>
                       </li>
                       <li className="flex gap-3">
                         <span className="text-slate-400">•</span>
-                        <span>Office identification signs</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-slate-400">•</span>
-                        <span>Room number signs</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-slate-400">•</span>
-                        <span>Data center/hall signs</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-slate-400">•</span>
-                        <span>Wall graphics & patterns</span>
+                        <span>Submit your final quotation request for review.</span>
                       </li>
                     </ul>
                   </div>
@@ -106,23 +94,15 @@ export default function Home() {
                     <ul className="space-y-2 text-sm text-slate-700 mb-6">
                       <li className="flex gap-3">
                         <span className="text-slate-400">•</span>
-                        <span>Quick reordering of previous signage</span>
+                        <span>Identify the signs needed for your project.</span>
                       </li>
                       <li className="flex gap-3">
                         <span className="text-slate-400">•</span>
-                        <span>Access your order history</span>
+                        <span>Review each sign's location and details.</span>
                       </li>
                       <li className="flex gap-3">
                         <span className="text-slate-400">•</span>
-                        <span>Duplicate existing configurations</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-slate-400">•</span>
-                        <span>Faster processing for repeat orders</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-slate-400">•</span>
-                        <span>Consistent branding with previous orders</span>
+                        <span>Submit completed review to Modulex.</span>
                       </li>
                     </ul>
                   </div>
