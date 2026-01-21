@@ -63,21 +63,21 @@ export const products: Product[] = [
     variants: [
       {
         code: "RF.7",
-        name: 'Facility Room ID - 7.5" width',
+        name: 'RF.7 - Facility Room ID - 7.5" width',
         price: 100.53,
         dimensions: '2.25" x 7.5"',
         sqft: "0.12",
       },
       {
         code: "RF.9",
-        name: 'Facility Room ID - 9" width',
+        name: 'RF.9 - Facility Room ID - 9" width',
         price: 104.99,
         dimensions: '2.25" x 9"',
         sqft: "0.14",
       },
       {
         code: "RF.9X",
-        name: 'Facility Room ID - 9" width (tall)',
+        name: 'RF.9X - Facility Room ID - 9" width (tall)',
         price: 116.38,
         dimensions: '3.35" x 9"',
         sqft: "0.21",
@@ -112,14 +112,14 @@ export const products: Product[] = [
     variants: [
       {
         code: "DI.18",
-        name: "Wall Directory - 18 slots",
+        name: "DI.X.18 - Wall Directory - 18 slots",
         price: 1386.57,
         dimensions: 'Varies x 18"',
         sqft: "Variable",
       },
       {
         code: "DI.22",
-        name: "Wall Directory - 22 slots",
+        name: "DI.X.22 - Wall Directory - 22 slots",
         price: 1751.68,
         dimensions: 'Varies x 18"',
         sqft: "Variable",
@@ -141,21 +141,21 @@ export const products: Product[] = [
     variants: [
       {
         code: "WG.X.6",
-        name: "Wall Guide - 6 slats",
+        name: "WG.X.6 - Wall Guide - 6 slats",
         price: 1188.81,
         dimensions: 'Varies x 24"',
         sqft: "Variable",
       },
       {
         code: "WG.X.8",
-        name: "Wall Guide - 8 slats",
+        name: "WG.X.8 - Wall Guide - 8 slats",
         price: 1545.73,
         dimensions: 'Varies x 24"',
         sqft: "Variable",
       },
       {
         code: "WG.X.10",
-        name: "Wall Guide - 10 slats",
+        name: "WG.X.10 - Wall Guide - 10 slats",
         price: 1577.3,
         dimensions: 'Varies x 24"',
         sqft: "Variable",
@@ -190,17 +190,17 @@ export const products: Product[] = [
     variants: [
       {
         code: "SI.X.9",
-        name: "Site ID - Standard",
+        name: "SI.X.9 - Site ID - Standard",
         price: 245.93,
       },
       {
         code: "SI.P.9",
-        name: "Site ID with Paperflex",
+        name: "SI.P.9 - Site ID with Paperflex",
         price: 313.57,
       },
       {
         code: "FA.X.12",
-        name: 'Site ID with Paperflex - 12"',
+        name: 'FA.X.12 - Site ID with Paperflex - 12"',
         price: 252.9,
       },
     ],
@@ -220,14 +220,14 @@ export const products: Product[] = [
     variants: [
       {
         code: "FL.18",
-        name: 'Flag Sign - 18" width',
+        name: 'FL.18 - Flag Sign - 18" width',
         price: 247.06,
         dimensions: '7.5" x 18"',
         sqft: "0.94",
       },
       {
         code: "FL.24",
-        name: 'Flag Sign - 24" width',
+        name: 'FL.24 - Flag Sign - 24" width',
         price: 401.54,
         dimensions: '7.5" x 24"',
         sqft: "1.25",
@@ -249,28 +249,28 @@ export const products: Product[] = [
     variants: [
       {
         code: "OH.1",
-        name: "Overhead Sign (1 Column, 1 Row)",
+        name: "OH.1 - Overhead Sign (1 Column, 1 Row)",
         price: 648.02,
         dimensions: '7.87" x 47.25"',
         sqft: "2.58",
       },
       {
         code: "OH.2",
-        name: "Overhead Sign (1 Column, 2 Rows)",
+        name: "OH.2 - Overhead Sign (1 Column, 2 Rows)",
         price: 966.49,
         dimensions: '15.75" x 47.25"',
         sqft: "5.17",
       },
       {
         code: "OH.3",
-        name: "Overhead Sign (2 Columns, 1 Row)",
+        name: "OH.3 - Overhead Sign (2 Columns, 1 Row)",
         price: 1207.81,
         dimensions: '7.87" x 94.5"',
         sqft: "5.17",
       },
       {
         code: "OH.4",
-        name: "Overhead Sign (2 Columns, 2 Rows)",
+        name: "OH.4 - Overhead Sign (2 Columns, 2 Rows)",
         price: 1825.57,
         dimensions: '15.75" x 94.5"',
         sqft: "10.34",
