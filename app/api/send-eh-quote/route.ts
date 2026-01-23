@@ -1,7 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  const key = process.env.RESEND_API_KEY
+  if (!key) throw new Error("RESEND_API_KEY is missing")
+  return new Resend(key)
+}
 
 const FROM_EMAIL = process.env.EH_FROM_EMAIL ?? "ehorders@order.emodulex.com"
 const TO_EMAIL = process.env.EH_TO_EMAIL ?? "gaa.orders@modulex.com"
@@ -28,6 +32,8 @@ interface QuoteRequest {
   requestDate: string
   total: number
 }
+
+const resend = getResend()
 
 export async function POST(request: NextRequest) {
   try {
@@ -148,9 +154,10 @@ export async function POST(request: NextRequest) {
 </html>
     `
 
+    const resend = getResend()
     const data = await resend.emails.send({
       from: `Endeavor Health Orders <${FROM_EMAIL}>`,
-      to: [clientInfo.email, "gaa.orders@modulex.com"],
+      to: [clientInfo.email, TO_EMAIL],
       replyTo: REPLY_TO_EMAIL,
       subject: `Quote Request ${requestNumber} - Endeavor Health Signage`,
       html: emailHtml,

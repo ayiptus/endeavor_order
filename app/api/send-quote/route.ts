@@ -1,12 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  const key = process.env.RESEND_API_KEY
+  if (!key) throw new Error("RESEND_API_KEY is missing")
+  return new Resend(key)
+}
 
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "drorders@order.emodulex.com"
 const TO_EMAIL = process.env.TO_EMAIL ?? "drorders@order.emodulex.com"
 const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL ?? "drorders@order.emodulex.com"
 
+const resend = getResend(); // Declare the resend variable
 
 interface CartItem {
   id: string
@@ -141,6 +146,7 @@ export async function POST(request: NextRequest) {
 </html>
     `
 
+    const resend = getResend()
     const data = await resend.emails.send({
       from: `Digital Realty Orders <${FROM_EMAIL}>`,
       to: [TO_EMAIL, clientInfo.email, "drorders@modulex.com"],
