@@ -11,8 +11,6 @@ const FROM_EMAIL = process.env.FROM_EMAIL ?? "drorders@order.emodulex.com"
 const TO_EMAIL = process.env.TO_EMAIL ?? "drorders@order.emodulex.com"
 const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL ?? "drorders@order.emodulex.com"
 
-const resend = getResend(); // Declare the resend variable
-
 interface CartItem {
   id: string
   name: string
