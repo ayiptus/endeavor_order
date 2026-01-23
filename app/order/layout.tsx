@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
+  title: "Digital Realty - Order Site",
   icons: {
     icon: [
       { url: "/dr/favicon.ico", sizes: "any" },
