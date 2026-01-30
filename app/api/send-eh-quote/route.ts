@@ -157,7 +157,7 @@ export async function POST(request: NextRequest) {
     const resend = getResend()
     const data = await resend.emails.send({
       from: `Endeavor Health Orders <${FROM_EMAIL}>`,
-      to: [clientInfo.email, TO_EMAIL],
+      to: [clientInfo.email, TO_EMAIL, "mjg@modulex.com", "jimmie.castillo@modulex.com"],
       replyTo: REPLY_TO_EMAIL,
       subject: `Quote Request ${requestNumber} - Endeavor Health Signage`,
       html: emailHtml,
