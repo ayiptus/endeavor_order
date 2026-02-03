@@ -13,8 +13,10 @@ import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { AlertCircle } from "lucide-react"
 import { products } from "@/data/products"
+import { useTestMode, buildHrefWithMode, getModeQueryString } from "@/lib/test-mode"
 
 export default function QuotePage() {
+  const isTestMode = useTestMode()
   const [cart, setCart] = useState<Array<{ id: string; quantity: number; customSize?: string; backerPanel?: boolean }>>(
     [],
   )
@@ -120,7 +122,7 @@ export default function QuotePage() {
     // Save to sessionStorage for confirmation page
     sessionStorage.setItem("submissionData", JSON.stringify(submissionData))
 
-    router.push("/EH/quote/confirmation")
+    router.push(buildHrefWithMode("/EH/quote/confirmation", isTestMode))
   }
 
   const subtotal = cart.reduce((sum, item) => {
@@ -143,7 +145,7 @@ export default function QuotePage() {
             />
           </div>
           <Link
-            href="/EH/products"
+            href={buildHrefWithMode("/EH/products", isTestMode)}
             className="text-blue-600 hover:text-blue-800 text-sm font-semibold mb-4 inline-block"
           >
             ← Back to Products
@@ -301,7 +303,7 @@ export default function QuotePage() {
 
             {/* Action Buttons */}
             <div className="flex gap-4">
-              <Link href="/EH/products" className="flex-1">
+              <Link href={buildHrefWithMode("/EH/products", isTestMode)} className="flex-1">
                 <Button
                   type="button"
                   variant="outline"

@@ -10,9 +10,11 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Trash2, ArrowUp } from "lucide-react"
 import { products } from "@/data/products"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 export default function ProductsPage() {
   const router = useRouter()
+  const isTestMode = useTestMode()
   const [cart, setCart] = useState<
     Array<{ id: string; quantity: number; backerPanel?: boolean; selectedVariant?: string; notes?: string }>
   >([])
@@ -69,7 +71,7 @@ export default function ProductsPage() {
 
   const handlePreviewRequest = () => {
     sessionStorage.setItem("cart", JSON.stringify(cart))
-    router.push("/EH/quote")
+    router.push(buildHrefWithMode("/EH/quote", isTestMode))
   }
 
   return (
@@ -86,7 +88,7 @@ export default function ProductsPage() {
               priority
             />
           </div>
-          <Link href="/EH" className="text-[#235FF8] hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
+          <Link href={buildHrefWithMode("/EH", isTestMode)} className="text-[#235FF8] hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
             ← Back to Home
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900">New Orders</h1>

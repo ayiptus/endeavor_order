@@ -7,6 +7,7 @@ import { ArrowLeft, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useTestMode, buildHrefWithMode, getModeQueryString } from "@/lib/test-mode"
 
 interface CartItem {
   id: string
@@ -30,6 +31,7 @@ interface ClientInfo {
 
 export default function PreviewPage() {
   const router = useRouter()
+  const isTestMode = useTestMode()
   const [clientInfo, setClientInfo] = useState<ClientInfo | null>(null)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [requestNumber, setRequestNumber] = useState("")
@@ -129,7 +131,7 @@ export default function PreviewPage() {
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <Card className="p-8 text-center max-w-md">
           <p className="text-muted-foreground mb-4">No preview data available</p>
-          <Link href="/">
+          <Link href={buildHrefWithMode("/", isTestMode)}>
             <Button>Return to Order Form</Button>
           </Link>
         </Card>
@@ -142,7 +144,7 @@ export default function PreviewPage() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/">
+          <Link href={buildHrefWithMode("/", isTestMode)}>
             <Button variant="outline" className="mb-4 bg-transparent">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
@@ -265,7 +267,7 @@ export default function PreviewPage() {
 
         {/* Submit Button */}
         <div className="flex gap-4">
-          <Link href="/" className="flex-1">
+          <Link href={buildHrefWithMode("/", isTestMode)} className="flex-1">
             <Button variant="outline" className="w-full bg-transparent">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back

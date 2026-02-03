@@ -1,10 +1,15 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowUp } from "lucide-react"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 export default function NewOrderHelpPage() {
+  const isTestMode = useTestMode()
+
   return (
     <main className="min-h-screen bg-white">
       <a
@@ -28,7 +33,7 @@ export default function NewOrderHelpPage() {
               priority
             />
           </div>
-          <Link href="/EH" className="text-[#235FF8] hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
+          <Link href={buildHrefWithMode("/EH", isTestMode)} className="text-[#235FF8] hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
             ← Back to Home
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How to Place a New Order</h1>
@@ -317,7 +322,7 @@ export default function NewOrderHelpPage() {
           </Card>
 
           <div className="flex justify-center pt-8">
-            <Link href="/EH/products">
+            <Link href={buildHrefWithMode("/EH/products", isTestMode)}>
               <Button className="bg-[#235FF8] hover:bg-[#1d4fc7] text-white px-8 py-6 text-lg">Start New Order</Button>
             </Link>
           </div>

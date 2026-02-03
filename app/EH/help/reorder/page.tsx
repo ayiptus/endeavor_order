@@ -1,10 +1,15 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowUp } from "lucide-react"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 export default function ReorderHelpPage() {
+  const isTestMode = useTestMode()
+
   return (
     <main className="min-h-screen bg-white">
       <a
@@ -28,7 +33,7 @@ export default function ReorderHelpPage() {
               priority
             />
           </div>
-          <Link href="/EH" className="text-[#235FF8] hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
+          <Link href={buildHrefWithMode("/EH", isTestMode)} className="text-[#235FF8] hover:text-blue-800 text-sm font-semibold mb-4 inline-block">
             ← Back to Home
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How to Place a Reorder</h1>

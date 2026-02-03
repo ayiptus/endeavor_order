@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card"
 import jsPDF from "jspdf"
 import "jspdf-autotable"
 import * as XLSX from "xlsx"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 interface CartItem {
   id: string
@@ -31,6 +32,7 @@ interface ClientInfo {
 
 export default function ConfirmationPage() {
   const router = useRouter()
+  const isTestMode = useTestMode()
   const [requestNumber, setRequestNumber] = useState("")
   const [requestDate, setRequestDate] = useState("")
   const [totalAmount, setTotalAmount] = useState("")
@@ -47,7 +49,7 @@ export default function ConfirmationPage() {
     const savedCart = localStorage.getItem("cartItems")
 
     if (!reqNum) {
-      router.push("/")
+      router.push(buildHrefWithMode("/", isTestMode))
       return
     }
 
@@ -276,7 +278,7 @@ export default function ConfirmationPage() {
   const handleNewRequest = () => {
     localStorage.removeItem("cartItems")
     localStorage.removeItem("clientInfo")
-    router.push("/")
+    router.push(buildHrefWithMode("/", isTestMode))
   }
 
   return (

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, FileText, FileSpreadsheet, Home } from "lucide-react"
 import { products } from "@/data/products"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 interface SubmissionData {
   requestNumber: string
@@ -27,13 +28,14 @@ interface SubmissionData {
 
 export default function ConfirmationPage() {
   const router = useRouter()
+  const isTestMode = useTestMode()
   const [submissionData, setSubmissionData] = useState<SubmissionData | null>(null)
 
   useEffect(() => {
     // Load submission data from sessionStorage
     const savedSubmission = sessionStorage.getItem("submissionData")
     if (!savedSubmission) {
-      router.push("/EH/products")
+      router.push(buildHrefWithMode("/EH/products", isTestMode))
       return
     }
 
@@ -67,7 +69,7 @@ export default function ConfirmationPage() {
     // Clear cart and submission data
     sessionStorage.removeItem("cart")
     sessionStorage.removeItem("submissionData")
-    router.push("/EH")
+    router.push(buildHrefWithMode("/EH", isTestMode))
   }
 
   if (!submissionData) {

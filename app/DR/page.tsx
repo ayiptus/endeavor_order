@@ -1,9 +1,14 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { BookOpen } from "lucide-react"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 export default function DRHomePage() {
+  const isTestMode = useTestMode()
+
   return (
     <div className="min-h-screen bg-background">
       {/* Logo Header */}
@@ -28,7 +33,7 @@ export default function DRHomePage() {
             Select your signage category to begin configuring your request
           </p>
           <Link
-            href="/help"
+            href={buildHrefWithMode("/help", isTestMode)}
             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium text-lg"
           >
             <BookOpen className="w-5 h-5" />
@@ -58,7 +63,7 @@ export default function DRHomePage() {
                 <li>• Vehicular Directional Signs</li>
               </ul>
 
-              <Link href="/order?type=exterior" className="w-full">
+              <Link href={buildHrefWithMode("/order?type=exterior", isTestMode)} className="w-full">
                 <Button size="lg" className="w-full h-12 text-lg">
                   Configure Exterior Signs
                 </Button>
@@ -86,7 +91,7 @@ export default function DRHomePage() {
                 <li>• Wall Graphics & Patterns</li>
               </ul>
 
-              <Link href="/order?type=interior" className="w-full">
+              <Link href={buildHrefWithMode("/order?type=interior", isTestMode)} className="w-full">
                 <Button size="lg" className="w-full h-12 text-lg">
                   Configure Interior Signs
                 </Button>
