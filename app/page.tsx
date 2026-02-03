@@ -1,8 +1,13 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 export default function MainMenuPage() {
+  const isTestMode = useTestMode()
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="container max-w-4xl mx-auto">
@@ -29,7 +34,7 @@ export default function MainMenuPage() {
                 Request exterior and interior signage for Digital Realty facilities
               </p>
 
-              <Link href="/DR" className="w-full">
+              <Link href={buildHrefWithMode("/DR", isTestMode)} className="w-full">
                 <Button size="lg" className="w-full h-12 text-lg">
                   Enter Digital Realty Portal
                 </Button>
@@ -52,7 +57,7 @@ export default function MainMenuPage() {
 
               <p className="text-muted-foreground">Request interior signage for Endeavor Health facilities</p>
 
-              <Link href="/EH" className="w-full">
+              <Link href={buildHrefWithMode("/EH", isTestMode)} className="w-full">
                 <Button size="lg" className="w-full h-12 text-lg">
                   Enter Endeavor Health Portal
                 </Button>

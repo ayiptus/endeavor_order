@@ -5,6 +5,7 @@ import { ChevronRight, Info, AlertCircle, ArrowUp, ArrowLeft } from "lucide-reac
 import { Card } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import Link from "next/link"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 interface FAQItem {
   question: string
@@ -61,6 +62,7 @@ const sections = [
 ]
 
 export default function HelpPage() {
+  const isTestMode = useTestMode()
   const [activeSection, setActiveSection] = useState<string>("")
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false)
 
@@ -113,7 +115,7 @@ export default function HelpPage() {
         <div className="container mx-auto px-4 py-16 md:py-24">
           <div className="max-w-3xl">
             <Link
-              href="/"
+              href={buildHrefWithMode("/", isTestMode)}
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
             >
               <ArrowLeft className="w-4 h-4" />

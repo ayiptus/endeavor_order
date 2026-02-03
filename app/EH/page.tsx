@@ -1,10 +1,15 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 export default function Home() {
+  const isTestMode = useTestMode()
+
   return (
     <main className="min-h-screen bg-white">
       {/* Header Section with Logo */}
@@ -78,13 +83,13 @@ export default function Home() {
 
                   <div className="space-y-3">
                     <Link
-                      href="/EH/help/new-order"
+                      href={buildHrefWithMode("/EH/help/new-order", isTestMode)}
                       className="flex items-center justify-center gap-2 text-sm text-slate-600 hover:text-[#235FF8] transition-colors"
                     >
                       <BookOpen className="w-4 h-4" />
                       <span>How to Place a New Order</span>
                     </Link>
-                    <Link href="/EH/products">
+                    <Link href={buildHrefWithMode("/EH/products", isTestMode)}>
                       <Button className="w-full bg-slate-300 hover:bg-[#235FF8] text-slate-900 hover:text-white font-semibold py-2 transition-colors">
                         Start New Order
                       </Button>
@@ -130,7 +135,7 @@ export default function Home() {
 
                   <div className="space-y-3">
                     <Link
-                      href="/EH/help/reorder"
+                      href={buildHrefWithMode("/EH/help/reorder", isTestMode)}
                       className="flex items-center justify-center gap-2 text-sm text-slate-600 hover:text-[#235FF8] transition-colors"
                     >
                       <BookOpen className="w-4 h-4" />

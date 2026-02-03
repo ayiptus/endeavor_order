@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { BookOpen, Trash2, Home } from "lucide-react"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { useTestMode, buildHrefWithMode } from "@/lib/test-mode"
 
 type SignType = "exterior" | "interior"
 
@@ -411,6 +412,7 @@ const interiorProducts: Product[] = [
 export default function OrderPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const isTestMode = useTestMode()
   const [signType, setSignType] = useState<SignType>("exterior")
   const [cart, setCart] = useState<CartItem[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string>("All")
@@ -485,7 +487,7 @@ export default function OrderPage() {
     localStorage.setItem("clientInfo", JSON.stringify(clientInfo))
     localStorage.setItem("cartItems", JSON.stringify(cart))
 
-    router.push("/preview")
+    router.push(buildHrefWithMode("/preview", isTestMode))
   }
 
   return (
@@ -495,7 +497,7 @@ export default function OrderPage() {
       <header className="border-b sticky top-0 bg-background z-10">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between mb-4">
-            <Link href="/">
+            <Link href={buildHrefWithMode("/", isTestMode)}>
               <Button variant="ghost" size="sm">
                 <Home className="w-4 h-4 mr-2" />
                 Back to Home
@@ -536,7 +538,7 @@ export default function OrderPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6 text-center">
           <Link
-            href="/help"
+            href={buildHrefWithMode("/help", isTestMode)}
             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium text-base"
           >
             <BookOpen className="w-5 h-5" />
