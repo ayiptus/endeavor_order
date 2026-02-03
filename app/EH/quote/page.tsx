@@ -43,7 +43,31 @@ export default function QuotePage() {
 
     setIsSubmitting(true)
 
-    const requestNumber = `ORD-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, "0")}${String(new Date().getDate()).padStart(2, "0")}-${Math.floor(Math.random() * 10000)}`
+    // Fetch request number from server
+    let requestNumber: string
+    try {
+      const urlParams = new URLSearchParams(window.location.search)
+      const mode = urlParams.get("mode")
+      const queryStr = mode === "test" ? "?mode=test" : ""
+      
+      const response = await fetch(`/api/generate-order-id${queryStr}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ app: "EH" }),
+      })
+      const data = await response.json()
+      if (data.success && data.orderId) {
+        requestNumber = data.orderId
+      } else {
+        // Fallback to legacy format if API fails
+        requestNumber = `ORD-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, "0")}${String(new Date().getDate()).padStart(2, "0")}-${Math.floor(Math.random() * 10000)}`
+      }
+    } catch (error) {
+      console.error("[v0] Failed to fetch order ID:", error)
+      // Fallback to legacy format
+      requestNumber = `ORD-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, "0")}${String(new Date().getDate()).padStart(2, "0")}-${Math.floor(Math.random() * 10000)}`
+    }
+
     const requestDate = new Date().toLocaleDateString("en-US", {
       month: "2-digit",
       day: "2-digit",

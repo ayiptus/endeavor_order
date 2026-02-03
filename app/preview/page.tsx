@@ -44,10 +44,36 @@ export default function PreviewPage() {
     if (savedClientInfo) setClientInfo(JSON.parse(savedClientInfo))
     if (savedCart) setCartItems(JSON.parse(savedCart))
 
-    // Generate request number
-    const date = new Date()
-    const reqNum = `ORD-${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`
-    setRequestNumber(reqNum)
+    // Fetch request number from server
+    const fetchOrderId = async () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search)
+        const mode = urlParams.get("mode")
+        const queryStr = mode === "test" ? "?mode=test" : ""
+        
+        const response = await fetch(`/api/generate-order-id${queryStr}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ app: "DR" }),
+        })
+        const data = await response.json()
+        if (data.success && data.orderId) {
+          setRequestNumber(data.orderId)
+        } else {
+          // Fallback to legacy format if API fails
+          const date = new Date()
+          const reqNum = `ORD-${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`
+          setRequestNumber(reqNum)
+        }
+      } catch (error) {
+        console.error("[v0] Failed to fetch order ID:", error)
+        // Fallback to legacy format
+        const date = new Date()
+        const reqNum = `ORD-${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`
+        setRequestNumber(reqNum)
+      }
+    }
+    fetchOrderId()
   }, [])
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
