@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -14,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {
-  LogOut,
   Download,
   Search,
   Filter,
@@ -38,15 +36,7 @@ interface Order {
   created_at: string
 }
 
-interface User {
-  id: number
-  email: string
-  name: string
-}
-
 export default function VaultDashboardPage() {
-  const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [total, setTotal] = useState(0)
@@ -61,30 +51,8 @@ export default function VaultDashboardPage() {
   const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
-    checkSession()
-  }, [])
-
-  useEffect(() => {
-    if (user) {
-      fetchOrders()
-    }
-  }, [user, page, appFilter, testFilter, startDate, endDate])
-
-  const checkSession = async () => {
-    try {
-      const response = await fetch("/api/vault/session")
-      const data = await response.json()
-
-      if (!data.user) {
-        router.push("/vault/login")
-        return
-      }
-
-      setUser(data.user)
-    } catch (error) {
-      router.push("/vault/login")
-    }
-  }
+    fetchOrders()
+  }, [page, appFilter, testFilter, startDate, endDate])
 
   const fetchOrders = async () => {
     setLoading(true)
@@ -102,10 +70,6 @@ export default function VaultDashboardPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        if (response.status === 401) {
-          router.push("/vault/login")
-          return
-        }
         throw new Error(data.error)
       }
 
@@ -117,11 +81,6 @@ export default function VaultDashboardPage() {
     } finally {
       setLoading(false)
     }
-  }
-
-  const handleLogout = async () => {
-    await fetch("/api/vault/logout", { method: "POST" })
-    router.push("/vault/login")
   }
 
   const handleExport = () => {
@@ -145,34 +104,16 @@ export default function VaultDashboardPage() {
     )
   })
 
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <RefreshCw className="w-8 h-8 text-blue-500 animate-spin" />
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-slate-900">
       {/* Header */}
       <header className="bg-slate-800 border-b border-slate-700 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Database className="w-8 h-8 text-blue-500" />
-            <div>
-              <h1 className="text-xl font-bold text-white">Order Vault</h1>
-              <p className="text-sm text-slate-400">Logged in as {user.email}</p>
-            </div>
+        <div className="flex items-center gap-4">
+          <Database className="w-8 h-8 text-blue-500" />
+          <div>
+            <h1 className="text-xl font-bold text-white">Order Vault</h1>
+            <p className="text-sm text-slate-400">eModulex Order Management</p>
           </div>
-          <Button
-            variant="outline"
-            onClick={handleLogout}
-            className="border-slate-600 text-slate-300 hover:bg-slate-700 bg-transparent"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
         </div>
       </header>
 

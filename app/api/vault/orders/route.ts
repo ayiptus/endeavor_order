@@ -1,19 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getSessionFromCookies, getSessionUser } from "@/lib/vault-auth"
 import { getOrders, getOrdersCount } from "@/lib/orders-db"
 
 export async function GET(request: NextRequest) {
   try {
-    // Check authentication
-    const token = await getSessionFromCookies()
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
-    const user = await getSessionUser(token)
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
+    // Auth is handled by proxy.ts Basic Auth - no session check needed
 
     // Parse query parameters
     const searchParams = request.nextUrl.searchParams
