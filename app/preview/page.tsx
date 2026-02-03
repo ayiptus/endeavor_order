@@ -102,6 +102,7 @@ export default function PreviewPage() {
           cartItems,
           requestNumber,
           total,
+          isTest: isTestMode,
         }),
       })
 
@@ -118,7 +119,7 @@ export default function PreviewPage() {
       localStorage.setItem("lastRequestTotal", total.toFixed(2))
       localStorage.setItem("lastRequestItems", cartItems.length.toString())
 
-      router.push("/confirmation")
+      router.push(buildHrefWithMode("/confirmation", isTestMode))
     } catch (error) {
       console.error("[v0] Error submitting quote:", error)
       alert("There was an error sending your quote request. Please try again.")

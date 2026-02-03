@@ -104,6 +104,7 @@ export default function QuotePage() {
           requestNumber,
           requestDate,
           total: subtotal,
+          isTest: isTestMode,
         }),
       })
 

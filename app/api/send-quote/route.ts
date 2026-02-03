@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
+import { insertOrder } from "@/lib/orders-db"
 
 function getResend() {
   const key = process.env.RESEND_API_KEY
@@ -36,12 +37,13 @@ interface QuoteRequest {
   cartItems: CartItem[]
   requestNumber: string
   total: number
+  isTest?: boolean
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body: QuoteRequest = await request.json()
-    const { clientInfo, cartItems, requestNumber, total } = body
+    const { clientInfo, cartItems, requestNumber, total, isTest } = body
 
     console.log("[v0] Sending quote email with Resend", { requestNumber, email: clientInfo.email })
 
@@ -154,6 +156,25 @@ export async function POST(request: NextRequest) {
     })
 
     console.log("[v0] Email sent successfully", data)
+
+    // Log order to database
+    try {
+      await insertOrder({
+        order_id: requestNumber,
+        app: "DR",
+        is_test: isTest || requestNumber.startsWith("TEST-"),
+        client_name: clientInfo.fullName,
+        client_email: clientInfo.email,
+        company_name: clientInfo.company,
+        property_address: clientInfo.propertyAddress,
+        items: cartItems,
+        total_amount: total,
+      })
+      console.log("[v0] Order logged to database", { requestNumber })
+    } catch (dbError) {
+      console.error("[v0] Failed to log order to database:", dbError)
+      // Don't fail the request if DB logging fails - email was sent successfully
+    }
 
     return NextResponse.json({ success: true, data }, { status: 200 })
   } catch (error) {
