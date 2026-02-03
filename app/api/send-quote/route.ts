@@ -7,9 +7,9 @@ function getResend() {
   return new Resend(key)
 }
 
-const FROM_EMAIL = process.env.FROM_EMAIL ?? "drorders@order.emodulex.com"
-const TO_EMAIL = process.env.TO_EMAIL ?? "drorders@order.emodulex.com"
-const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL ?? "drorders@order.emodulex.com"
+const FROM_EMAIL = process.env.FROM_EMAIL ?? "drorders@modulex.com"
+const TO_EMAIL = process.env.TO_EMAIL ?? "drorders@modulex.com"
+const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL ?? "drorders@modulex.com"
 
 interface CartItem {
   id: string
