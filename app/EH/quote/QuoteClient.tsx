@@ -26,6 +26,7 @@ export default function QuoteClient() {
   const [propertyAddress, setPropertyAddress] = useState("")
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [orderIdError, setOrderIdError] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -60,14 +61,18 @@ export default function QuoteClient() {
       const data = await response.json()
       if (data.success && data.orderId) {
         requestNumber = data.orderId
+        setOrderIdError(false)
       } else {
-        // Fallback to legacy format if API fails
-        requestNumber = `ORD-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, "0")}${String(new Date().getDate()).padStart(2, "0")}-${Math.floor(Math.random() * 10000)}`
+        console.error("[v0] Failed to generate order ID: API returned failure")
+        setOrderIdError(true)
+        setIsSubmitting(false)
+        return
       }
     } catch (error) {
       console.error("[v0] Failed to fetch order ID:", error)
-      // Fallback to legacy format
-      requestNumber = `ORD-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, "0")}${String(new Date().getDate()).padStart(2, "0")}-${Math.floor(Math.random() * 10000)}`
+      setOrderIdError(true)
+      setIsSubmitting(false)
+      return
     }
 
     const requestDate = new Date().toLocaleDateString("en-US", {
@@ -321,6 +326,14 @@ export default function QuoteClient() {
                 {isSubmitting ? "Submitting..." : "Submit Quote Request"}
               </Button>
             </div>
+
+            {/* Order ID Error */}
+            {orderIdError && (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-md text-center">
+                <p className="text-red-700 font-semibold">Failed to generate order ID</p>
+                <p className="text-red-600 text-sm mt-1">Please try again or contact support.</p>
+              </div>
+            )}
 
             {/* Footer Note */}
             <p className="text-xs text-slate-500 text-center">

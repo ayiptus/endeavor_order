@@ -27,7 +27,7 @@ async function generateRealOrderId(app: "DR" | "EH"): Promise<string> {
   const dateStr = getDateString()
   
   // Get next sequence from database (atomic, persistent across restarts)
-  const seq = await getNextSeq(app, dateStr)
+  const seq = await getNextSeq(app)
   const sequence = String(seq).padStart(4, "0")
   
   return `ORD-${app}-${dateStr}-${sequence}`

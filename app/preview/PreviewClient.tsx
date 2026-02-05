@@ -37,6 +37,7 @@ export default function PreviewClient() {
   const [requestNumber, setRequestNumber] = useState("")
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [orderIdError, setOrderIdError] = useState(false)
 
   useEffect(() => {
     // Load data from localStorage
@@ -61,18 +62,14 @@ export default function PreviewClient() {
         const data = await response.json()
         if (data.success && data.orderId) {
           setRequestNumber(data.orderId)
+          setOrderIdError(false)
         } else {
-          // Fallback to legacy format if API fails
-          const date = new Date()
-          const reqNum = `ORD-${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`
-          setRequestNumber(reqNum)
+          console.error("[v0] Failed to generate order ID: API returned failure")
+          setOrderIdError(true)
         }
       } catch (error) {
         console.error("[v0] Failed to fetch order ID:", error)
-        // Fallback to legacy format
-        const date = new Date()
-        const reqNum = `ORD-${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`
-        setRequestNumber(reqNum)
+        setOrderIdError(true)
       }
     }
     fetchOrderId()
@@ -154,8 +151,14 @@ export default function PreviewClient() {
           <h1 className="text-4xl font-bold text-center mb-2">Request Preview</h1>
           <p className="text-center text-muted-foreground">Review your request details before confirming</p>
           <p className="text-center text-sm text-muted-foreground mt-2">
-            Request Number: <span className="font-mono font-semibold">{requestNumber}</span>
+            Request Number: <span className="font-mono font-semibold">{requestNumber || "Loading..."}</span>
           </p>
+          {orderIdError && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md text-center">
+              <p className="text-red-700 font-semibold">Failed to generate order ID</p>
+              <p className="text-red-600 text-sm mt-1">Please refresh the page or contact support.</p>
+            </div>
+          )}
         </div>
 
         {/* Client Information */}
@@ -276,7 +279,7 @@ export default function PreviewClient() {
           </Link>
           <Button
             onClick={handleSubmit}
-            disabled={!acceptTerms || isSubmitting}
+            disabled={!acceptTerms || isSubmitting || orderIdError || !requestNumber}
             className="flex-1 bg-green-600 hover:bg-green-700"
           >
             <Check className="mr-2 h-4 w-4" />
