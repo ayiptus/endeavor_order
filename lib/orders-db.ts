@@ -122,3 +122,18 @@ export async function getOrderById(orderId: string) {
   `
   return result[0] || null
 }
+
+/**
+ * Get next sequence number for a given app and date.
+ * Uses UPSERT to atomically increment and return the sequence.
+ */
+export async function getNextSeq(app: "DR" | "EH", date: string): Promise<number> {
+  const result = await sql`
+    INSERT INTO order_sequences (app, date, seq)
+    VALUES (${app}, ${date}, 1)
+    ON CONFLICT (app, date)
+    DO UPDATE SET seq = order_sequences.seq + 1
+    RETURNING seq
+  `
+  return result[0].seq as number
+}

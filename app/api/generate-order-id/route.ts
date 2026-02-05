@@ -1,8 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-
-// In-memory counter store: { "DR-20260203": 1, "EH-20260203": 2, ... }
-// NOTE: This resets on server restart. For production persistence, use a database or KV store.
-const counters: Record<string, number> = {}
+import { getNextSeq } from "@/lib/orders-db"
 
 function getDateString(): string {
   const now = new Date()
@@ -26,16 +23,13 @@ function generateTestOrderId(app: "DR" | "EH"): string {
   return `TEST-${app}-${dateStr}-${timeStr}`
 }
 
-function generateRealOrderId(app: "DR" | "EH"): string {
+async function generateRealOrderId(app: "DR" | "EH"): Promise<string> {
   const dateStr = getDateString()
-  const counterKey = `${app}-${dateStr}`
-
-  // Atomic increment (safe for single-instance; use DB/KV for distributed)
-  const currentCount = counters[counterKey] ?? 0
-  const newCount = currentCount + 1
-  counters[counterKey] = newCount
-
-  const sequence = String(newCount).padStart(4, "0")
+  
+  // Get next sequence from database (atomic, persistent across restarts)
+  const seq = await getNextSeq(app, dateStr)
+  const sequence = String(seq).padStart(4, "0")
+  
   return `ORD-${app}-${dateStr}-${sequence}`
 }
 
@@ -54,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     const isTestMode = mode === "test"
-    const orderId = isTestMode ? generateTestOrderId(app) : generateRealOrderId(app)
+    const orderId = isTestMode ? generateTestOrderId(app) : await generateRealOrderId(app)
 
     console.log(`[v0] Generated order ID: ${orderId} (test=${isTestMode})`)
 
