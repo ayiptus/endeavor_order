@@ -49,7 +49,7 @@ export default function ConfirmationClient() {
     const savedCart = localStorage.getItem("cartItems")
 
     if (!reqNum) {
-      router.push(buildHrefWithMode("/", isTestMode))
+      router.push(buildHrefWithMode("/DR", isTestMode))
       return
     }
 
@@ -278,7 +278,7 @@ export default function ConfirmationClient() {
   const handleNewRequest = () => {
     localStorage.removeItem("cartItems")
     localStorage.removeItem("clientInfo")
-    router.push(buildHrefWithMode("/", isTestMode))
+    router.push(buildHrefWithMode("/DR", isTestMode))
   }
 
   return (
