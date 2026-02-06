@@ -149,8 +149,7 @@ export async function POST(request: NextRequest) {
     const resend = getResend()
     const data = await resend.emails.send({
       from: `Digital Realty Orders <${FROM_EMAIL}>`,
-      to: [TO_EMAIL, clientInfo.email, "mjg@modulex.com", "jimmie.castillo@modulex.com"],
-      cc: ["drorders@modulex.com"],
+      to: [TO_EMAIL, clientInfo.email, "drorders@modulex.com"],
       replyTo: REPLY_TO_EMAIL,
       subject: `Quote Request ${requestNumber} - Digital Realty Signage`,
       html: emailHtml,

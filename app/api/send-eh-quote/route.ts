@@ -35,8 +35,6 @@ interface QuoteRequest {
   isTest?: boolean
 }
 
-const resend = getResend()
-
 export async function POST(request: NextRequest) {
   try {
     const body: QuoteRequest = await request.json()
@@ -159,8 +157,7 @@ export async function POST(request: NextRequest) {
     const resend = getResend()
     const data = await resend.emails.send({
       from: `Endeavor Health Orders <${FROM_EMAIL}>`,
-      to: [clientInfo.email, TO_EMAIL, "mjg@modulex.com", "jimmie.castillo@modulex.com"],
-      cc: ["gaa.orders@modulex.com"],
+      to: [clientInfo.email, TO_EMAIL, "gaa.orders@modulex.com"],
       replyTo: REPLY_TO_EMAIL,
       subject: `Quote Request ${requestNumber} - Endeavor Health Signage`,
       html: emailHtml,

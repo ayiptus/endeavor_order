@@ -320,7 +320,7 @@ export default function QuoteClient() {
               </Link>
               <Button
                 type="submit"
-                disabled={!disclaimerAccepted || cart.length === 0 || isSubmitting}
+                disabled={!disclaimerAccepted || cart.length === 0 || isSubmitting || orderIdError}
                 className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
               >
                 {isSubmitting ? "Submitting..." : "Submit Quote Request"}
