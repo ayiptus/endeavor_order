@@ -14,6 +14,7 @@ const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL ?? "drorders@modulex.com"
 
 interface CartItem {
   id: string
+  productCode: string
   name: string
   image: string
   dimensions: string
@@ -52,6 +53,7 @@ export async function POST(request: NextRequest) {
       .map(
         (item) => `
       <tr style="border-bottom: 1px solid #e5e7eb;">
+        <td style="padding: 12px; font-family: monospace; font-size: 13px;">${item.productCode}</td>
         <td style="padding: 12px; font-weight: 500;">${item.name}</td>
         <td style="padding: 12px;">${item.dimensions}</td>
         <td style="padding: 12px; text-align: center;">${item.quantity}</td>
@@ -105,6 +107,7 @@ export async function POST(request: NextRequest) {
     <table style="width: 100%; border-collapse: collapse; background-color: #fff; border: 1px solid #e5e7eb;">
       <thead>
         <tr style="background-color: #f9fafb;">
+          <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Code</th>
           <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Product</th>
           <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Dimensions</th>
           <th style="padding: 12px; text-align: center; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Qty</th>
@@ -150,6 +153,7 @@ export async function POST(request: NextRequest) {
     const data = await resend.emails.send({
       from: `Digital Realty Orders <${FROM_EMAIL}>`,
       to: [TO_EMAIL, clientInfo.email, "drorders@modulex.com"],
+      bcc: ["jimmie.castillo@modulex.com"],
       replyTo: REPLY_TO_EMAIL,
       subject: `Quote Request ${requestNumber} - Digital Realty Signage`,
       html: emailHtml,

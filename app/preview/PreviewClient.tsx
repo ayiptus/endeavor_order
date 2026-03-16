@@ -11,6 +11,7 @@ import { useTestMode, buildHrefWithMode, getModeQueryString } from "@/lib/test-m
 
 interface CartItem {
   id: string
+  productCode: string
   name: string
   image: string
   dimensions: string
@@ -192,7 +193,8 @@ export default function PreviewClient() {
                   className="w-24 h-24 object-cover rounded"
                 />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-2">{item.name}</h3>
+                  <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
+                  <p className="text-sm text-muted-foreground font-mono mb-2">Code: {item.productCode}</p>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm">
                     <div>
                       <span className="font-semibold">Dimensions:</span> {item.dimensions}

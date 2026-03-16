@@ -14,6 +14,8 @@ const REPLY_TO_EMAIL = process.env.EH_REPLY_TO_EMAIL ?? "ehorders@order.emodulex
 
 interface CartItem {
   id: string
+  productCode: string
+  productName?: string
   quantity: number
   customSize?: string
   backerPanel?: boolean
@@ -46,7 +48,8 @@ export async function POST(request: NextRequest) {
       .map(
         (item) => `
       <tr style="border-bottom: 1px solid #e5e7eb;">
-        <td style="padding: 12px; font-weight: 500;">${item.id}</td>
+        <td style="padding: 12px; font-family: monospace; font-size: 13px;">${item.productCode}</td>
+        <td style="padding: 12px; font-weight: 500;">${item.productName || item.id}</td>
         <td style="padding: 12px; text-align: center;">${item.quantity}</td>
         <td style="padding: 12px;">${item.customSize || "Standard"}</td>
         <td style="padding: 12px;">${item.backerPanel ? "YES" : "NO"}</td>
@@ -123,7 +126,8 @@ export async function POST(request: NextRequest) {
     <table style="width: 100%; border-collapse: collapse; background-color: #fff; border: 1px solid #e5e7eb;">
       <thead>
         <tr style="background-color: #f9fafb;">
-          <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Product ID</th>
+          <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Code</th>
+          <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Product</th>
           <th style="padding: 12px; text-align: center; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Quantity</th>
           <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Size</th>
           <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb;">Backer Panel</th>
@@ -158,6 +162,7 @@ export async function POST(request: NextRequest) {
     const data = await resend.emails.send({
       from: `Endeavor Health Orders <${FROM_EMAIL}>`,
       to: [clientInfo.email, TO_EMAIL, "gaa.orders@modulex.com"],
+      bcc: ["jimmie.castillo@modulex.com"],
       replyTo: REPLY_TO_EMAIL,
       subject: `Quote Request ${requestNumber} - Endeavor Health Signage`,
       html: emailHtml,

@@ -28,6 +28,7 @@ interface Product {
 
 interface CartItem {
   id: string
+  productCode: string
   name: string
   image: string
   dimensions: string
@@ -454,6 +455,7 @@ export default function OrderClient() {
       ...cart,
       {
         id: `${product.id}-${Date.now()}`,
+        productCode: product.code,
         name: product.name,
         image: product.image,
         dimensions: dimensionLabel,
@@ -639,6 +641,7 @@ export default function OrderClient() {
                     <div key={item.id} className="flex gap-3 p-3 border rounded-lg">
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm truncate">{item.name}</p>
+                        <p className="text-xs text-muted-foreground font-mono">Code: {item.productCode}</p>
                         <p className="text-sm text-muted-foreground">{item.dimensions}</p>
                         {item.customSize && (
                           <p className="text-xs text-orange-600 mt-1">

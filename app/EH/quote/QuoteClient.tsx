@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { AlertCircle } from "lucide-react"
-import { products } from "@/data/products"
+import { products, type Product } from "@/data/products"
 import { useTestMode, buildHrefWithMode, getModeQueryString } from "@/lib/test-mode"
 
 export default function QuoteClient() {
@@ -93,6 +93,16 @@ export default function QuoteClient() {
     }
 
     try {
+      const enrichedCartItems = cart.map((item) => {
+        const product = products.find((p) => p.id === item.id)
+        const variant = product?.variants?.find((v) => v.code === (item as any).selectedVariant)
+        return {
+          ...item,
+          productCode: variant?.code ?? product?.id?.toUpperCase() ?? item.id.toUpperCase(),
+          productName: product?.name ?? item.id,
+        }
+      })
+
       const response = await fetch("/api/send-eh-quote", {
         method: "POST",
         headers: {
@@ -105,7 +115,7 @@ export default function QuoteClient() {
             companyName,
             propertyAddress,
           },
-          cartItems: cart,
+          cartItems: enrichedCartItems,
           requestNumber,
           requestDate,
           total: subtotal,
@@ -240,12 +250,14 @@ export default function QuoteClient() {
                   const product = products.find((p) => p.id === item.id)
                   if (!product) return null
 
+                  const selectedVariant = product.variants?.find((v) => v.code === (item as any).selectedVariant)
+                  const displayCode = selectedVariant?.code ?? product.id.toUpperCase()
                   return (
                     <Card key={item.id} className="p-4 bg-white">
                       <div className="flex justify-between items-start">
                         <div>
                           <h3 className="font-bold text-slate-900">{product.name}</h3>
-                          <p className="text-sm text-slate-500 uppercase mt-1">{product.id}</p>
+                          <p className="text-xs text-slate-500 font-mono mt-1">Code: {displayCode}</p>
                           <p className="text-sm text-slate-600 mt-2">Quantity: {item.quantity}</p>
                         </div>
                         <div className="text-right">
