@@ -157,7 +157,7 @@ export default function ProductsClient() {
                               {/* Product Details */}
                               <div className="flex-1 min-w-0">
                                 <h3 className="font-semibold text-sm text-slate-900 truncate">{product.name}</h3>
-                                <p className="text-xs text-slate-500 uppercase">{product.id}</p>
+                                <p className="text-xs text-slate-500 font-mono">Code: {variant?.code ?? product.id.toUpperCase()}</p>
                                 <p className="text-sm text-slate-700 mt-1">${price} each</p>
 
                                 {/* Quantity Controls */}
