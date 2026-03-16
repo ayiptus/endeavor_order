@@ -162,7 +162,7 @@ export async function POST(request: NextRequest) {
     const data = await resend.emails.send({
       from: `Endeavor Health Orders <${FROM_EMAIL}>`,
       to: [clientInfo.email, TO_EMAIL, "gaa.orders@modulex.com"],
-      bcc: ["jimmie.castillo@modulex.com"],
+      bcc: ["jimmie.castillo@modulex.com", "Chris.Pretorius@modulex.com"],
       replyTo: REPLY_TO_EMAIL,
       subject: `Quote Request ${requestNumber} - Endeavor Health Signage`,
       html: emailHtml,

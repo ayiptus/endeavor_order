@@ -194,7 +194,11 @@ export default function PreviewClient() {
                 />
                 <div className="flex-1">
                   <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
-                  <p className="text-sm text-muted-foreground font-mono mb-2">Code: {item.productCode}</p>
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm mb-2">
+                    <div>
+                      <span className="font-semibold">Code:</span> {item.productCode}
+                    </div>
+                  </div>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm">
                     <div>
                       <span className="font-semibold">Dimensions:</span> {item.dimensions}
