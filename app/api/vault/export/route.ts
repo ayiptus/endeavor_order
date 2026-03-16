@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       order.is_test ? "Yes" : "No",
       order.client_name,
       order.client_email,
-      order.company_name,
+      order.client_company,
       order.property_address,
       order.total_amount,
       Array.isArray(order.items) ? order.items.length : 0,
