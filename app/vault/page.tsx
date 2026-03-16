@@ -29,7 +29,7 @@ interface Order {
   is_test: boolean
   client_name: string
   client_email: string
-  company_name: string
+  client_company: string
   property_address: string
   items: any[]
   total_amount: number
@@ -100,7 +100,7 @@ export default function VaultDashboardPage() {
       order.order_id.toLowerCase().includes(term) ||
       order.client_name.toLowerCase().includes(term) ||
       order.client_email.toLowerCase().includes(term) ||
-      order.company_name.toLowerCase().includes(term)
+      order.client_company.toLowerCase().includes(term)
     )
   })
 
@@ -260,7 +260,7 @@ export default function VaultDashboardPage() {
                         <p className="text-sm text-white">{order.client_name}</p>
                         <p className="text-xs text-slate-400">{order.client_email}</p>
                       </td>
-                      <td className="px-4 py-3 text-sm text-slate-300">{order.company_name}</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">{order.client_company}</td>
                       <td className="px-4 py-3 text-sm font-medium text-white">
                         ${order.total_amount.toLocaleString()}
                       </td>

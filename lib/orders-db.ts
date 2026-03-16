@@ -9,7 +9,7 @@ export interface OrderRecord {
   is_test: boolean
   client_name: string
   client_email: string
-  company_name: string
+  client_company: string
   property_address: string
   items: object[]
   total_amount: number
@@ -24,7 +24,7 @@ export async function insertOrder(order: Omit<OrderRecord, "id" | "created_at">)
       is_test,
       client_name,
       client_email,
-      company_name,
+      client_company,
       property_address,
       items,
       total_amount
@@ -34,7 +34,7 @@ export async function insertOrder(order: Omit<OrderRecord, "id" | "created_at">)
       ${order.is_test},
       ${order.client_name},
       ${order.client_email},
-      ${order.company_name},
+      ${order.client_company},
       ${order.property_address},
       ${JSON.stringify(order.items)},
       ${order.total_amount}

@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
         is_test: isTest || requestNumber.startsWith("TEST-"),
         client_name: clientInfo.fullName,
         client_email: clientInfo.email,
-        company_name: clientInfo.companyName,
+        client_company: clientInfo.companyName,
         property_address: clientInfo.propertyAddress,
         items: cartItems,
         total_amount: total,
